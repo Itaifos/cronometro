@@ -1,0 +1,17 @@
+function maskNunber (a) {
+      
+  a = '0' + a;
+  a = a.substr(0, a.length);
+  a = Number(a);
+
+  return a;
+}
+
+
+
+hours = (hours < 10) ? "0" + hours : hours;
+minutes = (minutes < 10) ? "0" + minutes : minutes;
+seconds = (seconds < 10) ? "0" + seconds : seconds;
+milliseconds = (milliseconds < 100) ? (milliseconds < 10) ? "00" + milliseconds : "0" + milliseconds : milliseconds;
+
+
