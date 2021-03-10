@@ -1,10 +1,20 @@
 window.addEventListener('load', () => {
-    
     createButtonStart();
     createButtonPause();
 });
 
+// cria instancia do botao Start
+let buttonStart = document.createElement('button');
+// cria instancia do botao Pause
+let buttonPause = document.createElement('button');
+// Cria variavel da instancia do clock para poder pausar em qualquer local abaixo
+let clockTimer;
+
 function clock() {
+    // Desabilita botao Start
+    buttonStart.disabled = true;
+    // Habilita botao Pause
+    buttonPause.disabled = false;
 
     const timer = document.querySelector('#timer');
 
@@ -13,8 +23,8 @@ function clock() {
     let second = "0" + 0;
     let millisecond = 0;
 
-    setInterval(() => {
-        
+    // atribui a referencia do setInterval para clockTimer (Para ser possivel pausar depois)
+    clockTimer = setInterval(() => {
         if (millisecond === 1000) {
             second++;
             if (second < 10) {
@@ -40,31 +50,34 @@ function clock() {
             }
             minute = 0;
         }
-        
+
         millisecond = millisecond + 10;
-        
+
         timer.innerHTML = hour + ':' + minute + ':' + second + ':' + millisecond;
     }, 10);
 }
 
 function createButtonStart() {
-
-    let buttonStart = document.createElement('button');
     buttonStart.innerHTML = 'Start';
+    buttonStart.classList.add('button-start');
     buttonStart.addEventListener('click', clock);
-    timerButtons.appendChild(buttonStart);
 
+    timerButtons.appendChild(buttonStart);
 }
 
 function createButtonPause() {
-
     function myclearInterval() {
-        clearInterval(clock);
+        // Para o cronometro
+        clearInterval(clockTimer);
+        // Habilita o botao de Start
+        buttonStart.disabled = false;
+        // Desabilita o botao de Pause
+        buttonPause.disabled = true;
     }
 
-    let buttonPause = document.createElement('button');
     buttonPause.innerHTML = 'Pause';
+    // Começa com botão Pause desabilitado
+    buttonPause.disabled = true;
     buttonPause.addEventListener('click', myclearInterval);
     timerButtons.appendChild(buttonPause);
-
 }
